@@ -8,7 +8,10 @@ setup(
     author='Elia Mercatanti',
     author_email='emercatanti@gmail.com',
     url='https://bitbucket.org/elia-mercatanti/hill-cipher',
-    license='LICENSE.txt',
     description='Implement the Hill cipher.',
     long_description=open('README.md').read(),
+    license='LICENSE.txt',
+    download_url='https://bitbucket.org/elia-mercatanti/hill-cipher',
+    packages=['src'],
+    platforms=['Windows', 'MacOS', 'UNIX', 'Linux']
 )
