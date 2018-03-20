@@ -49,6 +49,17 @@ def get_reverse_alphabet(alphabet):
     return reverse_alphabet
 
 
+# Check if the key is a square in length
+def check_is_square(key, alphabet):
+    while True:
+        key_length = len(key)
+        if 2 <= key_length == int(math.sqrt(key_length)) ** 2:
+            break
+        else:
+            print("The key must be a square and >= 2.\n")
+            key = get_text_input("Insert the key for encryption: ", alphabet)
+
+
 # Create the matrix K for the keys
 def get_k_matrix(key, m, alphabet):
     array = []
@@ -57,7 +68,8 @@ def get_k_matrix(key, m, alphabet):
     return np.matrix(np.reshape(array, (m, m)))
 
 
-# Create the matrix of m-grams of the plaintext, if needed, complete the last m-gram with letter A (0).
+# Create the matrix of m-grams of the plaintext, if needed, complete the last m-gram with the first letter of the
+# alphabet
 def get_m_grams(plaintext, m, alphabet):
     array = []
     remainder = len(plaintext) % m
@@ -71,60 +83,37 @@ def get_m_grams(plaintext, m, alphabet):
 
 
 # Encrypt a Message
-def encrypt():
-    # Get the standard English alphabet
-    alphabet = get_alphabet()
-
-    # Get the revers dictionary for the alphabet
-    reverse_alphabet = get_reverse_alphabet(alphabet)
-
-    # Asks the user the text and the key for the encryption and checks the input
-    plaintext = get_text_input("Insert the text to be encrypted: ", alphabet)
-    key = get_text_input("Insert the key for encryption: ", alphabet)
-
-    # Check if the key is quadratic
-    while True:
-        key_length = len(key)
-        if 2 <= key_length == int(math.sqrt(key_length)) ** 2:
-            break
-        else:
-            print("The key must be a square and >= 2.\n")
-            key = get_text_input("Insert the key for encryption: ", alphabet)
-
-    # Get m
+def encrypt(plaintext, key, alphabet, reverse_alphabet):
+    # Get m, length of the grams
     m = int(math.sqrt(len(key)))
 
-    # Get the K key matrix
+    # Get the key matrix k
     k = get_k_matrix(key, m, alphabet)
 
-    # Get the matrix of m-grams of the plaintext
+    # Get the m-grams matrix p of the plaintext
     p = get_m_grams(plaintext, m, alphabet)
     m_grams = p.shape[1]
 
-    # Encrypt the plaintext with the key provided, calculate matrix C of ciphertext
+    # Encrypt the plaintext with the key provided k, calculate matrix c of ciphertext
     temp = []
     for i in range(m_grams):
         temp.append(np.dot(k, p[:, i]) % len(alphabet))
     c = np.column_stack(temp)
 
-    print(c)
-
-    # Transform the matrix C of ciphertext in letters from the alphabet
+    # Transform the matrix c of ciphertext in letters from the alphabet
     ciphertext_array = np.ravel(c, order='F')
-
     ciphertext = ""
     for i in range(len(ciphertext_array)):
         ciphertext = ciphertext + reverse_alphabet[ciphertext_array[i]]
 
-    print(ciphertext)
-    print(alphabet)
-    print(plaintext)
-    print(key)
+    return ciphertext
 
 
 # Decrypt a Message
-def decrypt():
-    return 0
+def decrypt(ciphertext, key, alphabet, reverse_alphabet):
+    plaintext = ''
+
+    return plaintext
 
 
 # Force a Ciphertext (Known Plaintext Attack)
@@ -133,18 +122,52 @@ def plaintext_attack():
 
 
 def main():
-    # Dictionary that control the functions of the script
-    functions = {1: encrypt, 2: decrypt, 3: plaintext_attack, 4: sys.exit}
-
     while True:
         # Ask the user what function wants to run
         choice = menu()
 
+        # Get the standard English alphabet
+        alphabet = get_alphabet()
+
+        # Get the revers dictionary for the alphabet
+        reverse_alphabet = get_reverse_alphabet(alphabet)
+
         # Run the function selected by the user
-        if choice != 4:
-            result = functions[choice]()
-        else:
-            result = functions[choice](0)
+        if choice == 1:
+            # Asks the user the text and the key for the encryption and checks the input
+            plaintext = get_text_input("Insert the text to be encrypted: ", alphabet)
+            key = get_text_input("Insert the key for encryption: ", alphabet)
+
+            # Check if the key is quadratic
+            check_is_square(key, alphabet)
+
+            # Encrypt the plaintext
+            ciphertext = encrypt(plaintext, key, alphabet, reverse_alphabet)
+
+            print("\nThe message has been encrypted.")
+            print("Generated Ciphertext: ", ciphertext, "\n")
+
+        elif choice == 2:
+            # Asks the user the text and the key for the encryption and checks the input
+            ciphertext = get_text_input("Insert the text to be encrypted: ", alphabet)
+            key = get_text_input("Insert the key for encryption: ", alphabet)
+
+            # Check if the key is quadratic
+            check_is_square(key, alphabet)
+
+            # Check if the key is invertible
+            # Continuare da qui!!!!..................................
+
+            # Decrypt the ciphertext
+            plaintext = decrypt(ciphertext, key, alphabet, reverse_alphabet)
+
+            print("\nThe message has been decrypted.")
+            print("Generated Plaintext: ", plaintext, "\n")
+
+        elif choice == 3:
+            plaintext_attack()
+        elif choice == 4:
+            sys.exit(0)
 
 
 if __name__ == '__main__':
