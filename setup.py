@@ -14,5 +14,5 @@ setup(
     download_url='https://bitbucket.org/elia-mercatanti/hill-cipher',
     packages=['src'],
     platforms=['Windows', 'MacOS', 'UNIX', 'Linux'],
-    requires=['numpy']
+    requires=['numpy', 'sympy']
 )
