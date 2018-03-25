@@ -21,6 +21,7 @@ def menu():
                 print("\nYou must enter a number from 1 to 4\n")
         except ValueError:
             print("\nYou must enter a number from 1 to 4\n")
+        input("Press Enter to continue.\n")
 
 
 # Create two dictionaries, english alphabet to numbers and numbers to english alphabet, and returns them
@@ -44,7 +45,7 @@ def get_text_input(message, alphabet):
         if all(keys in alphabet for keys in text):
             return text
         else:
-            print("\nThe text must contain only characters from the english alphabet ([A to Z] or [a to z]).\n")
+            print("\nThe text must contain only characters from the english alphabet ([A to Z] or [a to z]).")
 
 
 # Check if the key is a square in length
@@ -146,7 +147,7 @@ def main():
         # Run the function selected by the user
         if choice == 1:
             # Asks the user the plaintext and the key for the encryption and checks the input
-            plaintext = get_text_input("Insert the text to be encrypted: ", alphabet)
+            plaintext = get_text_input("\nInsert the text to be encrypted: ", alphabet)
             key = get_text_input("Insert the key for encryption: ", alphabet)
 
             if is_square(key):
@@ -158,6 +159,7 @@ def main():
                 p = get_text_matrix(plaintext, k.shape[0], alphabet)
                 print("Plaintext Matrix:\n", p)
 
+                input("\nPress Enter to begin te encryption.")
                 # Encrypt the plaintext
                 c = encrypt(k, p, alphabet)
 
@@ -172,7 +174,7 @@ def main():
 
         elif choice == 2:
             # Asks the user the ciphertext and the key for the encryption and checks the input
-            ciphertext = get_text_input("Insert the ciphertext to be decrypted: ", alphabet)
+            ciphertext = get_text_input("\nInsert the ciphertext to be decrypted: ", alphabet)
             key = get_text_input("Insert the key for decryption: ", alphabet)
 
             if is_square(key):
@@ -189,13 +191,15 @@ def main():
                     print("\nKey Matrix:\n", k)
                     print("Ciphertext Matrix:\n", c)
 
+                    input("\nPress Enter to begin the decryption.")
+
                     # Decrypt the ciphertext
                     p = decrypt(k_inverse, c, alphabet)
 
                     # Transform the ciphertext matrix to a text of the alphabet
                     plaintext = matrix_to_text(p, "t", reverse_alphabet)
 
-                    print("\nThe message has been decrypted.")
+                    print("\nThe message has been decrypted.\n")
                     print("Generated Plaintext: ", plaintext)
                     print("Generated Plaintext Matrix:\n", p, "\n")
                 else:
@@ -205,7 +209,7 @@ def main():
 
         elif choice == 3:
             # Asks the user the text and the ciphertext to use them for the plaintext attack
-            plaintext = get_text_input("Insert the plaintext for the attack: ", alphabet)
+            plaintext = get_text_input("\nInsert the plaintext for the attack: ", alphabet)
             ciphertext = get_text_input("Insert the ciphertext of the plaintext for the attack: ", alphabet)
 
             # Asks the user the length of the grams
@@ -228,13 +232,15 @@ def main():
                         print("\nCiphertext Matrix:\n", c)
                         print("Plaintext Matrix:\n", p)
 
+                        input("\nPress Enter to begin the attack.")
+
                         # Force the ciphertext provided
                         k = plaintext_attack(c, p_inverse, alphabet)
 
                         # Transform the key matrix to a text of the alphabet
                         key = matrix_to_text(k, "k", reverse_alphabet)
 
-                        print("\nThe key has been found.")
+                        print("\nThe key has been found.\n")
                         print("Generated Key: ", key)
                         print("Generated Key Matrix:\n", k, "\n")
                     else:
@@ -245,6 +251,7 @@ def main():
                 print("\nThe length of the plaintext must be compatible with the length of the grams (m).\n")
         elif choice == 4:
             sys.exit(0)
+        input("Press Enter to continue.\n")
 
 
 if __name__ == '__main__':
