@@ -8,7 +8,6 @@ Esercizio di programmazione per il Corso Data Security and Privacy - Set 1
 # Come Utilizzarlo
 
 
-
 # Come Funziona
 
 Una volta avviato, il programma stampa a video un piccolo menù dove vengono indicate le quattro possibili funzioni che
@@ -64,14 +63,6 @@ ogni lettera mancante.
 
 Le matrici del ciphertext e del plaintext si leggono per collonna dall'alto verso il basso, mentre le matrici delle
 chiavi si leggono per riga da sinistra a destra.
-
-English
-======================================================================================================================
-
-Hill cipher. It allows the user to encrypt and decrypt with Hill's cipher and to force a
-ciphertext through the known plaintext attack.
-
-Programming exercise for the Data Security and Privacy Course - Set 1
 
 # Author
 Elia Mercatanti
